@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://cj33p6iecm37n"]
+
+[ext_resource type="PackedScene" uid="uid://dthwvyv60g0ou" path="res://addons/landscape_editor/landscape_edit_demo.tscn" id="1_5dnem"]
+[ext_resource type="Script" path="res://addons/landscape_editor/landscape_demo.gd" id="1_870c1"]
+[ext_resource type="Script" path="res://addons/landscape_editor/Hero.gd" id="3_llht8"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wvbff"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_m83px"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5dqo"]
+sky_top_color = Color(0.792157, 0.831373, 0.882353, 1)
+sky_horizon_color = Color(0.996078, 0.494118, 0, 1)
+ground_bottom_color = Color(0.439216, 0.764706, 0.0980392, 1)
+ground_horizon_color = Color(0.301961, 0.541176, 0.0705882, 1)
+ground_curve = 0.02
+
+[sub_resource type="Sky" id="Sky_31yni"]
+sky_material = SubResource("ProceduralSkyMaterial_o5dqo")
+
+[sub_resource type="Environment" id="Environment_gje8c"]
+background_mode = 2
+sky = SubResource("Sky_31yni")
+ssao_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_u5vy1"]
+
+[node name="LandscapeDemo" type="Node3D"]
+script = ExtResource("1_870c1")
+
+[node name="LandscapeEditDemo" parent="." instance=ExtResource("1_5dnem")]
+
+[node name="Hero" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.525, 0.498, 2.218)
+script = ExtResource("3_llht8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hero"]
+shape = SubResource("SphereShape3D_wvbff")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hero"]
+mesh = SubResource("SphereMesh_m83px")
+
+[node name="Node3D" type="Node3D" parent="Hero"]
+
+[node name="Camera3D" type="Camera3D" parent="Hero/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.95368, 0.300822, 0, -0.300822, 0.95368, 0, 3.58826, 5.47075)
+environment = SubResource("Environment_gje8c")
+attributes = SubResource("CameraAttributesPractical_u5vy1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.35227, -0.851522, 0.388349, -0.640222, 0.0834163, 0.763648, -0.682658, -0.51764, -0.515778, -3.24635, 4.88722, 0)
+light_bake_mode = 0
+shadow_enabled = true
