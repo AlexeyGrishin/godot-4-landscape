@@ -4,6 +4,7 @@ render_mode diffuse_burley;
 uniform sampler2D noise;
 uniform sampler2D gradient;
 uniform sampler2D orm_gradient;
+uniform sampler2D normal: hint_normal;
 varying vec3 pos;
 
 void vertex() {
@@ -20,5 +21,6 @@ void fragment() {
 	vec4 orm = texture(orm_gradient, vec2(u, 0.5));
 	METALLIC = orm.b;
 	ROUGHNESS = orm.g;
+	NORMAL_MAP = texture(normal, UV).rgb;
 }
 
